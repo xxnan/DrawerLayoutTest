@@ -11,17 +11,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
-    private DrawerLayout drawerLayout;
+public class MainActivity extends AppCompatActivity {
+    @InjectView(R.layout.activity_main)
+    DrawerLayout drawerLayout;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
     ActionBarDrawerToggle mDrawerToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.inject(this);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawerlayout);
+//        drawerLayout=(DrawerLayout)findViewById(R.id.drawerlayout);
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) {
             @Override
             public void onDrawerOpened(View drawerView) {
