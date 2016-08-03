@@ -11,11 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import JavaReflection.Main;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MainActivity extends AppCompatActivity {
-    @InjectView(R.layout.activity_main)
+    @InjectView(R.id.drawerlayout)
     DrawerLayout drawerLayout;
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -48,8 +52,36 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        test();
     }
 
+    private void test()
+    {
+        //java反射机制
+        Main main=new Main(15,true,"jack");
+        try {
+//            Class mClass=main.getClass();
+            Class mClass=Class.forName("JavaReflection.Main");
+//            Field fields []= mClass.getFields();
+            Field fields []= mClass.getDeclaredFields();
+            for(int i=0;i<fields.length;i++)
+            {
+                String name=fields[i].getName();
+                System.out.println(name);
+            }
+            Method m[]=mClass.getDeclaredMethods();
+            Method cc=mClass.getDeclaredMethod("getAge", new Class[]{int.class});
+            int age=(int)cc.invoke(mClass.newInstance(),5);
+            System.out.println(age);
+            for(int i=0;i<m.length;i++)
+            {
+                String name1=m[i].getName();
+                System.out.println(name1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
